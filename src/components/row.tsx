@@ -5,7 +5,7 @@ import { useOnAnswer } from "@/hooks/on-answer";
 import { BouncingThreeDotsLoading } from "./bouncing-three-dots";
 
 type props = {
-  rowInput: IRowData
+  rowInput: IRowData;
 }
 
 export function Row({ rowInput }: props) {
@@ -21,7 +21,7 @@ export function Row({ rowInput }: props) {
         {
           isLoading
             ? <BouncingThreeDotsLoading />
-            : <Answer answer={row.answer ?? 'Error on loading your answer'} onError={!row.answer} />
+            : <Answer answer={row.answer ?? 'Error on loading your answer'} onError={!row.answer} filters={row.filters} />
         }
       </div>
     </div>
