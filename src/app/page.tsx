@@ -12,12 +12,14 @@ export default function QuestionAndAnswers() {
     onTyping,
     onSubmit,
     onChangeCheck,
-    checkedBuildings,
-    buildingTypes,
-    checkedContracts,
-    contractTypes,
-    checkedRegions,
-    regions,
+    checkedClient,
+    clients,
+    checkedDeliveryType,
+    deliveryTypes,
+    checkedDivision,
+    divisions,
+    checkedMarketType,
+    marketTypes,
   } = useOnQuestion();
 
   return (
@@ -28,7 +30,7 @@ export default function QuestionAndAnswers() {
           <textarea 
             contentEditable
             placeholder="Wire your question here"
-            className="border rounded-lg border-blue-700 px-6 py-2 placeholder:text-blue-700 min-h-[44px] focus-visible:border-blue-700 outline-none"
+            className="border h-[44px] rounded-lg border-blue-700 px-6 py-2 placeholder:text-blue-700  focus-visible:border-blue-700 outline-none"
             id="question"
             onChange={onTyping}
             value={question}
@@ -40,22 +42,45 @@ export default function QuestionAndAnswers() {
           </div>
           <div id="filters" className="flex gap-6">
             <DropdownMenu buttonContent={
-              <span className="flex relative text-nowrap rounded-lg border border-blue-700 text-blue-700 m-auto justify-between items-center px-6 py-2">
-                Building {checkedBuildings.length ? checkedBuildings.length : ''}
+              <span className="flex h-[44px] w-40 relative text-nowrap rounded-lg border border-blue-700 text-blue-700 m-auto justify-between items-center px-6 py-2">
+                Client {checkedClient.length ? checkedClient.length : ''}
                 <BiCaretDown className="absolute right-1"/>
               </span>
             }>
               <div className="flex flex-col">
-                {buildingTypes.map(type => (
+                {clients.map(client => (
+                  <label
+                    key={client}
+                    className="flex w-full gap-2"
+                  >
+                    <input
+                      type="checkbox"
+                      value={client}
+                      checked={checkedClient.includes(client)}
+                      onChange={() => onChangeCheck('client', client)}
+                    />
+                    {client}
+                  </label>
+                ))}
+              </div>
+            </DropdownMenu>
+            <DropdownMenu buttonContent={
+              <span className="flex h-[44px] w-40 relative text-nowrap rounded-lg border border-blue-700 text-blue-700  m-auto justify-between items-center px-6 py-2">
+                Delivery Type {checkedDeliveryType.length ? checkedDeliveryType.length : ''}
+                <BiCaretDown className="absolute right-1"/>
+              </span>
+            }>
+              <div className="flex flex-col">
+                {deliveryTypes.map(type => (
                   <label
                     key={type}
-                    className="flex w-full justify-around"
+                    className="flex w-full gap-2"
                   >
                     <input 
                       type="checkbox"
                       value={type}
-                      checked={checkedBuildings.includes(type)}
-                      onChange={() => onChangeCheck('buildings', type)}
+                      checked={checkedDeliveryType.includes(type)}
+                      onChange={() => onChangeCheck('deliveryType', type)}
                     />
                     {type}
                   </label>
@@ -63,54 +88,54 @@ export default function QuestionAndAnswers() {
               </div>
             </DropdownMenu>
             <DropdownMenu buttonContent={
-              <span className="flex relative text-nowrap rounded-lg border border-blue-700 text-blue-700 m-auto justify-between items-center px-6 py-2">
-                Contract {checkedContracts.length ? checkedContracts.length : ''}
+              <span className="flex h-[44px] w-40 relative text-nowrap rounded-lg border border-blue-700 text-blue-700 m-auto justify-between items-center px-6 py-2">
+                Division {checkedDivision.length ? checkedDivision.length : ''}
                 <BiCaretDown className="absolute right-1"/>
               </span>
             }>
               <div className="flex flex-col">
-                {contractTypes.map(type => (
+                {divisions.map(division => (
                   <label
-                    key={type}
-                    className="flex w-full justify-around"
+                    key={division}
+                    className="flex w-full gap-2"
+                  >
+                    <input 
+                      type="checkbox"
+                      value={division}
+                      checked={checkedDivision.includes(division)}
+                      onChange={() => onChangeCheck('division', division)}
+                    />
+                    {division}
+                  </label>
+                ))}
+              </div>
+            </DropdownMenu>
+            <DropdownMenu buttonContent={
+              <span className="flex h-[44px] w-40 relative text-nowrap rounded-lg border border-blue-700 text-blue-700 m-auto justify-between items-center px-6 py-2">
+                Market Types {checkedMarketType.length ? checkedMarketType.length : ''}
+                <BiCaretDown className="absolute right-1"/>
+              </span>
+            }>
+              <div className="flex flex-col">
+                {marketTypes.map(type => (
+                  <label
+                    key={type}  
+                    className="flex w-full gap-2"
                   >
                     <input 
                       type="checkbox"
                       value={type}
-                      checked={checkedContracts.includes(type)}
-                      onChange={() => onChangeCheck('contracts', type)}
+                      checked={checkedMarketType.includes(type)}
+                      onChange={() => onChangeCheck('marketType', type)}
                     />
                     {type}
                   </label>
                 ))}
               </div>
             </DropdownMenu>
-            <DropdownMenu buttonContent={
-              <span className="flex relative text-nowrap rounded-lg border border-blue-700 text-blue-700 m-auto justify-between items-center px-6 py-2">
-                Region {checkedRegions.length ? checkedRegions.length : ''}
-                <BiCaretDown className="absolute right-1"/>
-              </span>
-            }>
-              <div className="flex flex-col">
-                {regions.map(region => (
-                  <label
-                    key={region}
-                    className="flex w-full justify-around"
-                  >
-                    <input 
-                      type="checkbox"
-                      value={region}
-                      checked={checkedRegions.includes(region)}
-                      onChange={() => onChangeCheck('regions', region)}
-                    />
-                    {region}
-                  </label>
-                ))}
-              </div>
-            </DropdownMenu>
+            <button type="submit" className="h-[44px] rounded-lg bg-blue-700 text-white py-2 px-6 mt-auto mb-0 border border-blue-700">Submit</button>
           </div>
         </div>
-        <button type="submit" className="rounded-lg bg-blue-700 text-white py-2 px-6 mt-auto mb-2">Submit</button>
       </form>
 
       <div className="grid grid-cols-5 gap-6">

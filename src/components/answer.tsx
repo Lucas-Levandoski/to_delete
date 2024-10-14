@@ -1,20 +1,26 @@
 import { IFilters } from "@/models";
+import { BiRefresh } from "react-icons/bi";
 import { twMerge } from "tailwind-merge";
+import ReactMarkdown from 'react-markdown'
 
 type props = {
   answer: string;
   filters: IFilters;
   onError?: boolean;
+  onRetry?: () => void;
 }
 
 
-export function Answer({ answer, onError, filters }: props) {
-  const groupedFilters = [...filters.buildings, ...filters.contractTypes, ...filters.regions];
+export function Answer({ answer, onError, filters, onRetry = () => {} }: props) {
+  const groupedFilters = [...filters.client, ...filters.deliveryType, ...filters.division, ...filters.marketType];
 
   return (
     <div className="flex flex-col gap-1 justify-end">
-      <div className={twMerge('px-5 py-2 rounded-lg bg-blue-200', onError && 'bg-red-200')}>
-        {answer}
+      <div className={twMerge('px-5 py-2 rounded-lg bg-blue-200 relative', onError && 'bg-red-200')}>
+        <ReactMarkdown>{answer}</ReactMarkdown>
+        {
+          onError && <BiRefresh className="size-8 absolute right-0 bottom-0 cursor-pointer" onClick={() => onRetry()} />
+        }
       </div>
       { 
         groupedFilters.length

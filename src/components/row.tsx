@@ -9,7 +9,7 @@ type props = {
 }
 
 export function Row({ rowInput }: props) {
-  const { row, isLoading } = useOnAnswer({ question: rowInput.question, filters: rowInput.filters });
+  const { row, isLoading, onRetry } = useOnAnswer({ question: rowInput.question, filters: rowInput.filters });
 
   return (
     <div className="grid grid-cols-5 w-full gap-6">
@@ -21,7 +21,7 @@ export function Row({ rowInput }: props) {
         {
           isLoading
             ? <BouncingThreeDotsLoading />
-            : <Answer answer={row.answer ?? 'Error on loading your answer'} onError={!row.answer} filters={row.filters} />
+            : <Answer answer={row.answer ?? 'Error on loading your answer'} onError={!row.answer} filters={row.filters} onRetry={onRetry} />
         }
       </div>
     </div>

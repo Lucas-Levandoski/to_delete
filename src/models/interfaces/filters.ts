@@ -1,5 +1,6 @@
 export interface IFilters {
-  buildings: string[];
-  contractTypes: string[];
-  regions: string[];
+  division: string[];
+  deliveryType: string[];
+  marketType: string[];
+  client: string[];
 }

@@ -12,16 +12,27 @@ export function useOnAnswer({ question, filters }: props) {
   const [row, setRow] = useState<IRowData>({ question, filters })
 
   useEffect(() => {
-    onQuestion(question, filters)
-      .then(res => {
-        if(res) 
-          setRow({ ... row, answer: res.answer, filters: res.filters });
-      })
-      .finally(() => setIsLoading(false));
+    fetchQuestion();
   }, []);
+
+  const onRetry = () => {
+    setIsLoading(true);
+
+    fetchQuestion();
+  }
+
+  const fetchQuestion = async () => {
+    onQuestion(question, filters)
+    .then(res => {
+      if(res) 
+        setRow({ ... row, answer: res.answer, filters: res.filters });
+    })
+    .finally(() => setIsLoading(false));
+  }
 
   return {
     isLoading,
     row,
+    onRetry,
   }
 }

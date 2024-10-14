@@ -1,4 +1,4 @@
-import { IRowData } from "@/models";
+import { IFilters, IRowData } from "@/models";
 import { ChangeEvent, useEffect, useState } from "react"
 
 
@@ -6,21 +6,24 @@ import { ChangeEvent, useEffect, useState } from "react"
 export function useOnQuestion() {
   const [rows, setRows] = useState<IRowData[]>([]);
   const [question, setQuestion] = useState('');
-  const [checkedBuildings, setCheckedBuildings] = useState<string[]>([])
-  const [buildingTypes, setBuildingTypes] = useState<string[]>([])
-  const [checkedContracts, setCheckedContracts] = useState<string[]>([])
-  const [contractTypes, setContractTypes] = useState<string[]>([])
-  const [checkedRegions, setCheckedRegions] = useState<string[]>([])
-  const [regions, setRegions] = useState<string[]>([])
+  const [checkedDivision, setCheckedDivision] = useState<string[]>([])
+  const [divisions, setDivisions] = useState<string[]>([])
+  const [checkedDeliveryType, setCheckedDeliveryType] = useState<string[]>([])
+  const [deliveryTypes, setDeliveryTypes] = useState<string[]>([])
+  const [checkedMarketType, setCheckedMarketType] = useState<string[]>([])
+  const [marketTypes, setMarketTypes] = useState<string[]>([])
+  const [checkedClient, setCheckedClient] = useState<string[]>([])
+  const [clients, setClients] = useState<string[]>([])
 
   useEffect(() => {
     getFacets();
   }, []);
 
   const getFacets = async() => {
-    setBuildingTypes(['school', 'something'])
-    setContractTypes(['contract1', 'contract2'])
-    setRegions(['south', 'north'])
+    setDivisions(['school', 'something'])
+    setDeliveryTypes(['contract1', 'contract2'])
+    setMarketTypes(['south', 'north'])
+    setClients(['south', 'north'])
   };
 
   const onTyping = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,22 +36,25 @@ export function useOnQuestion() {
     if(question.length === 0) return;
 
     setRows([...rows, { question, filters: {
-      buildings: checkedBuildings,
-      contractTypes: checkedContracts,
-      regions: checkedRegions
+      division: checkedDivision,
+      deliveryType: checkedDeliveryType,
+      marketType: checkedMarketType,
+      client: checkedClient,
     } }])
 
     setQuestion('');
   }
 
-  const onChangeCheck = (target: 'buildings' | 'contracts' | 'regions', value: string) => {
+  const onChangeCheck = (target: keyof IFilters , value: string) => {
     switch(target) {
-      case 'buildings':
-        return setCheckedBuildings(onToggleCheck(checkedBuildings, value));
-      case 'contracts':
-        return setCheckedContracts(onToggleCheck(checkedContracts, value));
-      case 'regions':
-        return setCheckedRegions(onToggleCheck(checkedRegions, value));
+      case 'division':
+        return setCheckedDivision(onToggleCheck(checkedDivision, value));
+      case 'deliveryType':
+        return setCheckedDeliveryType(onToggleCheck(checkedDeliveryType, value));
+      case 'marketType':
+        return setCheckedMarketType(onToggleCheck(checkedMarketType, value));
+      case 'client':
+        return setCheckedClient(onToggleCheck(checkedClient, value));
     }
   }
 
@@ -62,12 +68,14 @@ export function useOnQuestion() {
   return {
     rows,
     question,
-    checkedBuildings,
-    buildingTypes,
-    checkedContracts,
-    contractTypes,
-    checkedRegions,
-    regions,
+    checkedDivision,
+    divisions,
+    checkedDeliveryType,
+    deliveryTypes,
+    checkedMarketType,
+    marketTypes,
+    checkedClient,
+    clients,
     onTyping,
     onSubmit,
     onChangeCheck
