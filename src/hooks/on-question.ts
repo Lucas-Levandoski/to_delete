@@ -54,12 +54,12 @@ export function useOnQuestion() {
 
     if(question.length === 0) return;
 
-    setRows([...rows, { question, filters: {
+    setRows([{ id: rows.length, question, filters: {
       division: checkedDivision,
       deliveryType: checkedDeliveryType,
       marketType: checkedMarketType,
       client: checkedClient,
-    } }])
+    } }, ...rows])
 
     setQuestion('');
   }

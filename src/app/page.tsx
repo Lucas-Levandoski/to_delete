@@ -24,7 +24,7 @@ export default function QuestionAndAnswers() {
   } = useOnQuestion();
 
   return (
-    <div className="flex flex-col gap-6 w-full h-full p-6">
+    <div className="flex flex-col gap-6 w-full h-screen p-6 overflow-hidden">
       <form onSubmit={onSubmit} className="flex gap-6 z-10">
         <div className="flex flex-col w-full gap-4">
           <label htmlFor="question" className="text-lg font-bold">Question</label>
@@ -55,7 +55,7 @@ export default function QuestionAndAnswers() {
                     : clients.map(client => (
                         <label
                           key={client}
-                          className="flex w-full gap-2"
+                          className="flex w-fit gap-2 bg-sl"
                         >
                           <input
                             type="checkbox"
@@ -152,12 +152,14 @@ export default function QuestionAndAnswers() {
         </div>
       </form>
 
-      <div className="grid grid-cols-5 gap-6">
-        <b className="col-span-2 text-lg">Question</b>
-        <b className="col-span-3 text-lg">Answer</b>
-      </div>
-      <div className="flex flex-col w-full h-full gap-5 overflow-auto">
-        {rows.map((row, i) => <Row key={`row-element-${i}`} rowInput={row} />)}
+      <div className="h-full overflow-auto pr-1">
+        <div className="grid grid-cols-5 gap-6">
+          <b className="col-span-2 text-lg">Question</b>
+          <b className="col-span-3 text-lg">Answer</b>
+        </div>
+        <div className="flex flex-col w-full h-full gap-5">
+          {rows.map(row => <Row key={`row-element-${row.id}`} rowInput={row} />)}
+        </div>
       </div>
     </div>
   );
