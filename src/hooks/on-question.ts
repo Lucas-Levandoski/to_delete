@@ -1,4 +1,5 @@
 import { IFilters, IRowData } from "@/models";
+import { readFacets } from "@/services";
 import { ChangeEvent, useEffect, useState } from "react"
 
 
@@ -20,10 +21,21 @@ export function useOnQuestion() {
   }, []);
 
   const getFacets = async() => {
-    setDivisions(['school', 'something'])
-    setDeliveryTypes(['contract1', 'contract2'])
-    setMarketTypes(['south', 'north'])
-    setClients(['south', 'north'])
+    const facets = await readFacets({client: checkedClient, deliveryType: checkedDeliveryType, division: checkedDivision, marketType: checkedMarketType});
+
+    if(!facets) {
+      setDivisions([])
+      setDeliveryTypes([])
+      setMarketTypes([])
+      setClients([])
+
+      return;
+    };
+
+    setClients(facets.Client.map(client => client.value))
+    setMarketTypes(facets.MarketType.map(marketType => marketType.value))
+    setDeliveryTypes(facets.DeliveryType.map(deliveryType => deliveryType.value))
+    setDivisions(facets.Division.map(division => division.value))
   };
 
   const onTyping = (event: ChangeEvent<HTMLTextAreaElement>) => {
