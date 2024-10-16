@@ -1,7 +1,7 @@
 import { IFilters } from "@/models";
 import { BiRefresh } from "react-icons/bi";
 import { twMerge } from "tailwind-merge";
-import ReactMarkdown from 'react-markdown'
+import { Remarkable } from 'remarkable';
 
 type props = {
   answer: string;
@@ -10,6 +10,9 @@ type props = {
   onRetry?: () => void;
 }
 
+const md = new Remarkable({
+  breaks: true,
+})
 
 export function Answer({ answer, onError, filters, onRetry = () => {} }: props) {
   const groupedFilters = [...filters.client, ...filters.deliveryType, ...filters.division, ...filters.marketType];
@@ -17,7 +20,7 @@ export function Answer({ answer, onError, filters, onRetry = () => {} }: props) 
   return (
     <div className="flex flex-col gap-1 justify-end">
       <div className={twMerge('px-5 py-2 rounded-lg bg-blue-200 relative', onError && 'bg-red-200')}>
-        <ReactMarkdown>{answer}</ReactMarkdown>
+        <div dangerouslySetInnerHTML={{ __html: md.render(answer) }} />
         {
           onError && <BiRefresh className="size-8 absolute right-0 bottom-0 cursor-pointer" onClick={() => onRetry()} />
         }
