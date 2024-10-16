@@ -25,7 +25,7 @@ export default function QuestionAndAnswers() {
 
   return (
     <div className="flex flex-col gap-6 w-full h-full p-6">
-      <form onSubmit={onSubmit} className="flex gap-6">
+      <form onSubmit={onSubmit} className="flex gap-6 z-10">
         <div className="flex flex-col w-full gap-4">
           <label htmlFor="question" className="text-lg font-bold">Question</label>
           <textarea 
