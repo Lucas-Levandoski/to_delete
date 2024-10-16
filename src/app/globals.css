@@ -28,6 +28,14 @@ h2 {
 h3 {
   @apply mt-2;
   @apply text-lg;
+  @apply underline;
+  @apply font-semibold;
+}
+
+h4 {
+  @apply mt-2;
+  @apply underline;
+  @apply font-semibold;
 }
 
 p {
