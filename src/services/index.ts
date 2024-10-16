@@ -18,7 +18,9 @@ export async function readFacets({ client, deliveryType, division, marketType }:
     'MarketType',
   ];
 
-  return await searchClient.post<{ "@search.facets": IFacets}>('/pqq/docs/search?api-version=2020-06-30', { facets })
+  return await faClient.post<IFacets>('getFacets', { fieldNames: facets } ).then(res => res.data);
+
+  return await searchClient.post<{ "@search.facets": IFacets}>('pqq/docs/search?api-version=2020-06-30', { facets })
     .then(res => res.data["@search.facets"])
     .catch(console.error);
 
