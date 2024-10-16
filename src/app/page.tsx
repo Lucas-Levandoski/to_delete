@@ -1,12 +1,13 @@
 'use client';
 
-import { DropdownMenu, Row } from "@/components";
+import { BouncingThreeDotsLoading, DropdownMenu, Row } from "@/components";
 import { useOnQuestion } from "@/hooks/on-question";
 import { BiCaretDown } from "react-icons/bi";
 
 
 export default function QuestionAndAnswers() {
   const { 
+    isFacetsLoading,
     rows, 
     question,
     onTyping,
@@ -48,20 +49,24 @@ export default function QuestionAndAnswers() {
               </span>
             }>
               <div className="flex flex-col">
-                {clients.map(client => (
-                  <label
-                    key={client}
-                    className="flex w-full gap-2"
-                  >
-                    <input
-                      type="checkbox"
-                      value={client}
-                      checked={checkedClient.includes(client)}
-                      onChange={() => onChangeCheck('client', client)}
-                    />
-                    {client}
-                  </label>
-                ))}
+                {
+                  isFacetsLoading 
+                    ? <BouncingThreeDotsLoading />
+                    : clients.map(client => (
+                        <label
+                          key={client}
+                          className="flex w-full gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            value={client}
+                            checked={checkedClient.includes(client)}
+                            onChange={() => onChangeCheck('client', client)}
+                          />
+                          {client}
+                        </label>
+                    ))
+                }
               </div>
             </DropdownMenu>
             <DropdownMenu buttonContent={
@@ -71,20 +76,24 @@ export default function QuestionAndAnswers() {
               </span>
             }>
               <div className="flex flex-col">
-                {deliveryTypes.map(type => (
-                  <label
-                    key={type}
-                    className="flex w-full gap-2"
-                  >
-                    <input 
-                      type="checkbox"
-                      value={type}
-                      checked={checkedDeliveryType.includes(type)}
-                      onChange={() => onChangeCheck('deliveryType', type)}
-                    />
-                    {type}
-                  </label>
-                ))}
+                {
+                  isFacetsLoading 
+                    ? <BouncingThreeDotsLoading />
+                    :deliveryTypes.map(type => (
+                      <label
+                        key={type}
+                        className="flex w-full gap-2"
+                      >
+                        <input 
+                          type="checkbox"
+                          value={type}
+                          checked={checkedDeliveryType.includes(type)}
+                          onChange={() => onChangeCheck('deliveryType', type)}
+                        />
+                        {type}
+                      </label>
+                    ))
+                }
               </div>
             </DropdownMenu>
             <DropdownMenu buttonContent={
@@ -94,20 +103,25 @@ export default function QuestionAndAnswers() {
               </span>
             }>
               <div className="flex flex-col">
-                {divisions.map(division => (
-                  <label
-                    key={division}
-                    className="flex w-full gap-2"
-                  >
-                    <input 
-                      type="checkbox"
-                      value={division}
-                      checked={checkedDivision.includes(division)}
-                      onChange={() => onChangeCheck('division', division)}
-                    />
-                    {division}
-                  </label>
-                ))}
+                {
+                  
+                  isFacetsLoading 
+                    ? <BouncingThreeDotsLoading />
+                    : divisions.map(division => (
+                      <label
+                        key={division}
+                        className="flex w-full gap-2"
+                      >
+                        <input 
+                          type="checkbox"
+                          value={division}
+                          checked={checkedDivision.includes(division)}
+                          onChange={() => onChangeCheck('division', division)}
+                        />
+                        {division}
+                      </label>
+                    ))
+                }
               </div>
             </DropdownMenu>
             <DropdownMenu buttonContent={

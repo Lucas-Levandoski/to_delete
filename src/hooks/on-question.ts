@@ -5,6 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react"
 
 
 export function useOnQuestion() {
+  const [isFacetsLoading, setIsFacetsLoading] = useState(false);
   const [rows, setRows] = useState<IRowData[]>([]);
   const [question, setQuestion] = useState('');
   const [checkedDivision, setCheckedDivision] = useState<string[]>([])
@@ -21,21 +22,27 @@ export function useOnQuestion() {
   }, []);
 
   const getFacets = async() => {
-    const facets = await readFacets({client: checkedClient, deliveryType: checkedDeliveryType, division: checkedDivision, marketType: checkedMarketType});
+    setIsFacetsLoading(true);
 
-    if(!facets) {
-      setDivisions([])
-      setDeliveryTypes([])
-      setMarketTypes([])
-      setClients([])
-
-      return;
-    };
-
-    setClients(facets.Client.map(client => client.value))
-    setMarketTypes(facets.MarketType.map(marketType => marketType.value))
-    setDeliveryTypes(facets.DeliveryType.map(deliveryType => deliveryType.value))
-    setDivisions(facets.Division.map(division => division.value))
+    try {
+      const facets = await readFacets({client: checkedClient, deliveryType: checkedDeliveryType, division: checkedDivision, marketType: checkedMarketType});
+  
+      if(!facets) {
+        setDivisions([])
+        setDeliveryTypes([])
+        setMarketTypes([])
+        setClients([])
+  
+        return;
+      };
+  
+      setClients(facets.Client.map(client => client.value))
+      setMarketTypes(facets.MarketType.map(marketType => marketType.value))
+      setDeliveryTypes(facets.DeliveryType.map(deliveryType => deliveryType.value))
+      setDivisions(facets.Division.map(division => division.value))
+    } finally {
+      setIsFacetsLoading(false);
+    }
   };
 
   const onTyping = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -78,6 +85,7 @@ export function useOnQuestion() {
 
 
   return {
+    isFacetsLoading,
     rows,
     question,
     checkedDivision,

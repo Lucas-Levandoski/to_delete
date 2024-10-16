@@ -2,7 +2,7 @@ import { IFacets, IFilters, IRowData } from "@/models";
 import axios from "axios";
 
 const faClient = axios.create({ baseURL: 'https://funckmpqq2z5yen.azurewebsites.net/api' })
-const searchClient = axios.create({ baseURL: 'https://sekmadm2z5yencx4yqodq.search.windows.net/indexes' })
+const searchClient = axios.create({ baseURL: 'https://sekmadm2z5yencx4yqodq.search.windows.net/indexes', headers: { 'api-key': process.env.COG_SEARCH_KEY} })
 
 export async function onQuestion(question: string, filters?: IFilters): Promise<IRowData | void> {
   return await faClient.post<IRowData>('getAnswer', {question, filters})
