@@ -52,10 +52,11 @@ export default function QuestionAndAnswers() {
                 {
                   isFacetsLoading 
                     ? <BouncingThreeDotsLoading />
-                    : clients.map(client => (
+                    : clients.map((client, i) => (
+                      <>
                         <label
                           key={client}
-                          className="flex w-fit gap-2 bg-sl"
+                          className="flex w-fit gap-2 bg-sl text-nowrap cursor-pointer"
                         >
                           <input
                             type="checkbox"
@@ -65,6 +66,8 @@ export default function QuestionAndAnswers() {
                           />
                           {client}
                         </label>
+                        { i < clients.length - 1 && <hr className="my-1" /> }
+                      </>
                     ))
                 }
               </div>
@@ -79,19 +82,22 @@ export default function QuestionAndAnswers() {
                 {
                   isFacetsLoading 
                     ? <BouncingThreeDotsLoading />
-                    :deliveryTypes.map(type => (
-                      <label
-                        key={type}
-                        className="flex w-full gap-2"
-                      >
-                        <input 
-                          type="checkbox"
-                          value={type}
-                          checked={checkedDeliveryType.includes(type)}
-                          onChange={() => onChangeCheck('deliveryType', type)}
-                        />
-                        {type}
-                      </label>
+                    :deliveryTypes.map((type, i) => (
+                      <>
+                        <label
+                          key={type}
+                          className="flex w-full gap-2 text-nowrap cursor-pointer"
+                        >
+                          <input 
+                            type="checkbox"
+                            value={type}
+                            checked={checkedDeliveryType.includes(type)}
+                            onChange={() => onChangeCheck('deliveryType', type)}
+                          />
+                          {type}
+                        </label>
+                        { i < deliveryTypes.length - 1 && <hr className="my-1" /> }
+                      </>
                     ))
                 }
               </div>
@@ -107,19 +113,22 @@ export default function QuestionAndAnswers() {
                   
                   isFacetsLoading 
                     ? <BouncingThreeDotsLoading />
-                    : divisions.map(division => (
-                      <label
-                        key={division}
-                        className="flex w-full gap-2"
-                      >
-                        <input 
-                          type="checkbox"
-                          value={division}
-                          checked={checkedDivision.includes(division)}
-                          onChange={() => onChangeCheck('division', division)}
-                        />
-                        {division}
-                      </label>
+                    : divisions.map((division, i) => (
+                      <>
+                        <label
+                          key={division}
+                          className="flex w-full gap-2 text-nowrap cursor-pointer"
+                        >
+                          <input 
+                            type="checkbox"
+                            value={division}
+                            checked={checkedDivision.includes(division)}
+                            onChange={() => onChangeCheck('division', division)}
+                          />
+                          {division}
+                        </label>
+                        { i < divisions.length - 1 && <hr className="my-1" /> }
+                      </>
                     ))
                 }
               </div>
@@ -131,19 +140,22 @@ export default function QuestionAndAnswers() {
               </span>
             }>
               <div className="flex flex-col">
-                {marketTypes.map(type => (
-                  <label
-                    key={type}  
-                    className="flex w-full gap-2"
-                  >
-                    <input 
-                      type="checkbox"
-                      value={type}
-                      checked={checkedMarketType.includes(type)}
-                      onChange={() => onChangeCheck('marketType', type)}
-                    />
-                    {type}
-                  </label>
+                {marketTypes.map((type, i) => (
+                  <>
+                    <label
+                      key={type}  
+                      className="flex w-full gap-2 text-nowrap cursor-pointer"
+                    >
+                      <input 
+                        type="checkbox"
+                        value={type}
+                        checked={checkedMarketType.includes(type)}
+                        onChange={() => onChangeCheck('marketType', type)}
+                      />
+                      {type}
+                    </label>
+                    { i < marketTypes.length - 1 && <hr className="my-1" /> }
+                  </>
                 ))}
               </div>
             </DropdownMenu>
